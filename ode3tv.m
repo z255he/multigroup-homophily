@@ -24,25 +24,6 @@ function dydt = ode3tv(t, y, param)
     L = 0.9;
     ht = 2 * (L - param.h)/(1 + exp(-param.alpha * t)) + 2 * param.h - L;
 
-    % Linear decrease
-    %L = 0.1;
-    %ht = max(-param.alpha * t + param.h, L);
-
-    % Linear increase
-    %L = 0.9;
-    %ht = min(param.alpha * t + param.h, L);
-
-    % Piecewise constant disturbance
-    %t_start = 30;
-    %t_end = 60;
-    %H_window = double(t >= t_start) .* double(t <= t_end);
-    %A = 0.1;
-    %ht = max(min(param.h + A * H_window, 0.9), 0.1);
-
-    % Pseudo-random perturbation
-    %perturb = sum(param.C .* sin(param.w * t + param.phi));
-    %ht = max(min(param.h + perturb, 0.9), 0.1);
-
     % Homophily matrix
     H = zeros(3); % Initialize n×n matrix
 
@@ -52,8 +33,6 @@ function dydt = ode3tv(t, y, param)
     end
     H = 1/3 * H;
     
-    %EP = -omega + delta * (ht' .* xi + (1 - ht') * sum(xi));
-    %EA = -i + delta * (ht' .* (1 - xi) + (1 - ht') * (N - sum(xi)));
     EP = -omega + delta * (xi + (1 - param.h')./(sum(param.pop) - param.pop') .* (param.pop * xi - param.pop' .* xi));
     EA = -i + delta * ((1 - xi) + (1 - param.h')./(sum(param.pop) - param.pop') .* (param.pop * (1 - xi) - param.pop' .* (1 - xi)));
 

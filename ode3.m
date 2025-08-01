@@ -1,6 +1,5 @@
 function dydt = ode3(t, y, param)
     R0 = 10;
-    %R0 = param.R0;
     gamma = 36;
     mu = 1/60;
     beta = R0 * (gamma + mu);
@@ -18,8 +17,6 @@ function dydt = ode3(t, y, param)
     
     omega = 3e-4;
     
-    %EP = -omega + delta * (param.h' .* xi + (1 - param.h') * sum(xi));
-    %EA = -i + delta * (param.h' .* (1 - xi) + (1 - param.h') * (N - sum(xi)));
     EP = -omega + delta * (xi + (1 - param.h')./(sum(param.pop) - param.pop') .* (param.pop * xi - param.pop' .* xi));
     EA = -i + delta * ((1 - xi) + (1 - param.h')./(sum(param.pop) - param.pop') .* (param.pop * (1 - xi) - param.pop' .* (1 - xi)));
 

@@ -23,15 +23,14 @@ options = odeset('RelTol', 1e-12, 'AbsTol', 1e-14);
 
 % Parameter range for h
 h_values = 0.1:0.01:0.9;
-%r0_values = [0.8, 4, 8, 10];
 %num_sims = length(h_values);
 num_sims = length(h_values)*length(h_values);
-%num_sims = length(h_values)*length(r0_values);
 
 % Preallocate result storage (cell array in case y1 has multiple columns)
 results = cell(num_sims, 1);
 
 %{
+% Vary h1
 for i = 1:num_sims
     % Update parameter
     param = param_base;
@@ -213,4 +212,4 @@ for var_idx = 1:num_vars
     fclose(fid);
     dlmwrite(filename, data_matrix, '-append');
 end
-%}
+%
